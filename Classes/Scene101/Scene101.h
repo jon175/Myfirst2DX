@@ -13,6 +13,11 @@ private:
 	cocos2d::Rect    rectReplay;
 	cocos2d::Rect    rectReturn;
 
+	bool _bTouched = false;
+	float _felaptime;
+	float _fangle;
+	cocos2d::Sprite *_bean;
+
 	int  _sceneno;
 	char _cSceneNo[10];
 
