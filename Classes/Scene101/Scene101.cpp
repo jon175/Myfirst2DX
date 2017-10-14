@@ -38,15 +38,9 @@ bool Scene101::init()
 	bkimage->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y)); // 位置通常放置在螢幕正中間
 	this->addChild(bkimage, 0);
 
-	//test 
-	_bean = Sprite::create("scene101/bean1_01.png");  // 使用 create 函式,給予檔名即可
-	_bean->setPosition(Vec2(330, 590)); // 位置通常放置在螢幕正中間
-	_bean->setScale(2);
-	this->addChild(_bean, 0);
-
+	
 	// 自行增加 sprite 將 bean01.png 到螢幕正中間
 	
-
 
 	// create and initialize a label, add a label shows "Scene 101"
 	auto label = Label::createWithTTF("Scene 101", "fonts/Marker Felt.ttf", 32);
@@ -106,6 +100,16 @@ bool Scene101::init()
 	this->rectCuber = Rect(pos.x - size.width / 2, pos.y - size.height / 2, size.width, size.height);
 	this->addChild(cuberbtn, 1);
 
+	//test 
+	this->_bean = Sprite::create("scene101/bean1_01.png");  // 使用 create 函式,給予檔名即可
+	size = _bean->getContentSize();
+	this->_bean->setPosition(Vec2(330, 590)); // 位置通常放置在螢幕正中間
+	pos =_bean->getPosition();
+	this->rectBean = Rect(pos.x - size.width / 2, pos.y - size.height / 2, size.width, size.height);
+	this->_bean->setScale(2);
+	this->addChild(_bean, 0);
+
+
 	_listener1 = EventListenerTouchOneByOne::create();	//創建一個一對一的事件聆聽器
 	_listener1->onTouchBegan = CC_CALLBACK_2(Scene101::onTouchBegan, this);		//加入觸碰開始事件
 	_listener1->onTouchMoved = CC_CALLBACK_2(Scene101::onTouchMoved, this);		//加入觸碰移動事件
@@ -119,15 +123,7 @@ bool Scene101::init()
 
 void Scene101::doStep(float dt)  // OnFrameMove
 {
-	_felaptime += dt;
-	_fangle = _felaptime * 180;
-	_bean->setRotation(_fangle);
-	if (_fangle >= 360) {
-		_felaptime = 0;
-		_bTouched = false;
-
-	}
-
+	
 
 }
 
@@ -144,15 +140,20 @@ bool  Scene101::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//�
 		unscheduleAllCallbacks();
 		Director::getInstance()->end();
 	}
-	_bTouched = !_bTouched;
-
+	
 	return true;
 }
 
 void  Scene101::onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //觸碰移動事件
 {
-
-
+	Point touchLoc = pTouch->getLocation();
+	CCLOG("sss x=%f, y=%f", pTouch->getLocation().x, pTouch->getLocation().y);
+	if (rectBean.containsPoint(touchLoc)) {
+		float mx,my;
+		mx = pTouch->getLocation().x;
+		my = pTouch->getLocation().y;
+		_bean->setPosition(Vec2(mx, my));
+	}
 }
 
 void  Scene101::onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //觸碰結束事件 
@@ -161,3 +162,4 @@ void  Scene101::onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //�
 
 
 }
+

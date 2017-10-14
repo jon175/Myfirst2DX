@@ -12,7 +12,9 @@ private:
 	cocos2d::Rect    rectCuber;
 	cocos2d::Rect    rectReplay;
 	cocos2d::Rect    rectReturn;
+	cocos2d::Rect    rectBean;
 
+	//bean
 	bool _bTouched = false;
 	float _felaptime;
 	float _fangle;
@@ -35,6 +37,7 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(Scene101);
+	
 };
 
 #endif // __SCENE_101_H__
